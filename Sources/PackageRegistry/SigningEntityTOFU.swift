@@ -178,7 +178,7 @@ struct PackageSigningEntityTOFU {
         }
     }
 
-    private func writeToStorage(
+    func writeToStorage(
         package: PackageIdentity.RegistryIdentity,
         version: Version,
         signingEntity: SigningEntity,

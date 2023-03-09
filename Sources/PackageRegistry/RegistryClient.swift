@@ -102,6 +102,24 @@ public final class RegistryClient: Cancellable {
         try self.httpClient.cancel(deadline: deadline)
     }
 
+    public func acceptIdentityChange(
+        package: PackageIdentity.RegistryIdentity,
+        version: Version,
+        signingEntity: SigningEntity,
+        observabilityScope: ObservabilityScope,
+        callbackQueue: DispatchQueue,
+        completion: @escaping (Result<Void, Error>) -> Void
+    ) {
+        let signingEntityTOFU = PackageSigningEntityTOFU(signingEntityStorage: self.signingEntityStorage, signingEntityCheckingMode: self.signingEntityCheckingMode)
+        signingEntityTOFU.writeToStorage(
+            package: package,
+            version: version,
+            signingEntity: signingEntity,
+            observabilityScope: observabilityScope,
+            callbackQueue: callbackQueue,
+            completion: completion)
+    }
+
     public func getPackageMetadata(
         package: PackageIdentity,
         timeout: DispatchTimeInterval? = .none,

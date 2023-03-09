@@ -3402,6 +3402,24 @@ extension Workspace {
          // remove the local copy
          try registryDownloadsManager.remove(package: dependency.packageRef.identity)
      }
+
+     /// Accept an identity change that we raise a `RegistryError` for.
+     public func acceptIdentityChange(
+         package: PackageIdentity.RegistryIdentity,
+         version: Version,
+         signingEntity: SigningEntity,
+         observabilityScope: ObservabilityScope,
+         callbackQueue: DispatchQueue,
+         completion: @escaping (Result<Void, Error>) -> Void
+     ) {
+         self.registryClient.acceptIdentityChange(
+            package: package,
+            version: version,
+            signingEntity: signingEntity,
+            observabilityScope: observabilityScope,
+            callbackQueue: callbackQueue,
+            completion: completion)
+     }
  }
 
 // MARK: - Utility extensions
